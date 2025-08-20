@@ -103,20 +103,15 @@ def get_fill_in_the_blank_exercise(
     return {"exercise": clean_json_response(response)}
 
 
-class SentenceCorrectionRequest(schemas.BaseModel):
-    sentence: str
-    target_language: str
-
-
 @router.post("/exercises/sentence-correction")
 def correct_sentence(
-    request: SentenceCorrectionRequest,
+    request: schemas.SentenceCorrectionRequest,
     current_user: models.User = Depends(get_current_user),
 ):
     """
     Corregge una frase scritta dall'utente e fornisce una spiegazione.
     """
-    prompt = f"""A user is learning {request.target_language}. Their native language is {current_user.native_language}.
+    prompt = f"""A user is learning {request.target_language}. His native language is {current_user.native_language}.
     The user wrote the following sentence: '{request.sentence}'
     Please correct the sentence if there are any errors.
     Then, provide a brief, simple explanation of the correction in {current_user.native_language}.

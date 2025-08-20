@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from typing import List, Optional
 
+# Qui ci sono tutte le classi utilizzate in Fastapi/Pydantic per la validazione dei dati
 
 class UserBase(BaseModel):
     username: str
@@ -44,7 +45,7 @@ class AssessmentAnswer(BaseModel):
 
 
 class AssessmentSubmission(BaseModel):
-    exercise_type: str  # e.g., "comprehension-test", "fill-in-the-blank"
+    exercise_type: str  # ad esempio "comprehension-test", "fill-in-the-blank", ...
     target_language: str
     answers: List[AssessmentAnswer]
 
@@ -95,3 +96,7 @@ class ChatInteractionRequest(BaseModel):
     language: str
     mode: str
     messages: List[ChatMessage]
+
+class SentenceCorrectionRequest(BaseModel):
+    sentence: str
+    target_language: str

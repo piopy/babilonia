@@ -18,7 +18,7 @@ Le funzionalità principali includono:
 ### 1. Clonare il Repository
 ```bash
 git clone <URL_DEL_TUO_REPOSITORY>
-cd test-gemini-linguo
+cd babilonia
 ```
 
 ### 2. Configurare le Variabili d'Ambiente

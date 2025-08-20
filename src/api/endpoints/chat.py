@@ -7,6 +7,10 @@ from utils.llm_handler import generate_llm_response
 
 router = APIRouter()
 
+# Questo modulo gestisce le interazioni della chat con il modello LLM,
+# consentendo agli utenti di interagire in diverse modalità (es. insegnante, compagno di conversazione, traduttore).
+
+
 
 def get_db():
     db = SessionLocal()
@@ -20,7 +24,10 @@ def get_db():
 def chat_interaction(
     request: schemas.ChatInteractionRequest, db: Session = Depends(get_db)
 ):
-    """Handles chat interaction with the LLM based on the specified mode."""
+    """
+    Gestisce le interazioni della chat con il modello LLM in base alla modalità selezionata.
+    NB. Guardare ChatInteractionRequest epr il body della richiesta
+    """
 
     language = crud.get_language_by_name(db, request.language.capitalize())
     if not language:
@@ -44,14 +51,12 @@ def chat_interaction(
 
     full_message_history = [system_message] + request.messages
 
-    # Convert the message history to a single string prompt
     prompt = "\n".join([f"{msg.role}: {msg.content}" for msg in full_message_history])
 
     try:
         llm_response_content = generate_llm_response(prompt)
         return schemas.ChatMessage(role="assistant", content=llm_response_content)
     except Exception as e:
-        # Log the exception details here if you have a logging setup
         raise HTTPException(
             status_code=500,
             detail=f"An error occurred while communicating with the LLM: {e}",
@@ -60,5 +65,7 @@ def chat_interaction(
 
 @router.get("/modes", response_model=List[str])
 def get_available_modes():
-    """Returns a list of available modes for chat interaction."""
+    """
+    Ritorna una lista delle modalità di interazione disponibili per la chat.
+    """
     return ["teacher", "talk_buddy", "translator"]

@@ -17,13 +17,17 @@ def get_db():
 
 @router.get("/languages", response_model=List[schemas.Language])
 def get_languages(db: Session = Depends(get_db)):
-    """Returns a list of supported languages for learning."""
+    """
+    Ritorna una lista di tutte le lingue supportate per l'apprendimento.
+    """
     return crud.get_languages(db)
 
 
 @router.post("/add-language", response_model=schemas.Language)
 def add_language(language: schemas.LanguageBase, db: Session = Depends(get_db)):
-    """Adds a new language to the list of supported languages for learning."""
+    """
+    Aggiunge una nuova lingua alla lista delle lingue supportate.
+    """
     db_language = (
         db.query(models.Language).filter(models.Language.name == language.name.capitalize()).first()
     )

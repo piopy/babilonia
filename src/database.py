@@ -11,6 +11,9 @@ Base = declarative_base()
 
 
 def init_db():
+    """
+    Inizializza il database creando le tabelle e popolando i dati iniziali se non presenti.
+    """
     import models
     import crud
 
@@ -18,8 +21,10 @@ def init_db():
 
     db = SessionLocal()
     try:
-        # Populate initial languages
+        # Lingue iniziali
         initial_languages = [
+            "Albanian",
+            "Arabic",
             "English",
             "Spanish",
             "French",
@@ -36,7 +41,7 @@ def init_db():
             if not db.query(models.Language).filter_by(name=lang_name).first():
                 crud.create_language(db, lang_name)
 
-        # Populate initial topics
+        # Topics iniziali
         initial_topics = [
             "Saluti e Presentazioni",
             "Viaggi e Trasporti",
@@ -48,12 +53,20 @@ def init_db():
             "Salute e Benessere",
             "Meteo e Stagioni",
             "In Città e Indicazioni Stradali",
+            "Cultura e Tradizioni",
+            "Emergenze",
+            "Sentimenti ed Emozioni",
+            "Sport",
+            "Tecnologia",
+            "Natura e Ambiente",
+            "Istruzione",
+            "Casa e Vita Quotidiana",
         ]
         for topic_name in initial_topics:
             if not db.query(models.Topic).filter_by(name=topic_name).first():
                 crud.create_topic(db, topic_name)
 
-        # Populate initial lesson subjects
+        # Argomenti di lezione iniziali
         initial_lesson_subjects = [
             "Articoli (Determinativi e Indeterminativi)",
             "Sostantivi (Genere e Numero)",
@@ -66,6 +79,15 @@ def init_db():
             "Preposizioni (Semplici e Articolate)",
             "Congiunzioni",
             "Avverbi",
+            "Sintassi della Frase Semplice",
+            "Formazione delle Domande",
+            "Comparativi e Superlativi",
+            "Il Congiuntivo (Uso Base)",
+            "Il Condizionale (Uso Base)",
+            "Discorso Diretto e Indiretto",
+            "Verbi Modali",
+            "Lessico Tematico (es. Colori, Numeri, Giorni della Settimana)",
+            "Espressioni Idiomatiche Comuni",
         ]
         for subject_name in initial_lesson_subjects:
             if not db.query(models.LessonSubject).filter_by(name=subject_name).first():

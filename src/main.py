@@ -3,11 +3,11 @@ from api.endpoints import auth, languages, exercises, learning_content, phrasebo
 from database import engine, Base, init_db
 
 Base.metadata.create_all(bind=engine)
-init_db()  # Initialize database with default values
+init_db() 
 
 app = FastAPI(
     title="Babilonia API",
-    description="API per un'applicazione di apprendimento linguistico potenziata da LLM.",
+    description="API per un'applicazione di apprendimento linguistico tramite LLM.",
     version="0.1.0",
 )
 
@@ -19,6 +19,6 @@ app.include_router(phrasebook.router, prefix="/api", tags=["Phrasebook"])
 app.include_router(chat.router, prefix="/api/chat", tags=["Chat"])
 
 
-@app.get("/", tags=["Root"])
+@app.get("/")
 def read_root():
-    return {"message": "Welcome to the Babilonia API!"}
+    return {"message": "Welcome to Babilonia!"}

@@ -31,6 +31,9 @@ def get_db():
 
 @router.post("/users/", response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
+    """
+    Crea un nuovo utente nel database.
+    """
     db_user = crud.get_user_by_username(db, username=user.username)
     if db_user:
         raise HTTPException(status_code=400, detail="Username already registered")
@@ -42,6 +45,9 @@ def login_for_access_token(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
     db: Session = Depends(get_db),
 ):
+    """
+    Gestisce il processo di login di un utente e genera un token di accesso JWT (JSON Web Token) se l'autenticazione ha successo.
+    """
     user = crud.get_user_by_username(db, username=form_data.username)
     if not user or not pwd_context.verify(form_data.password, user.hashed_password):
         raise HTTPException(
